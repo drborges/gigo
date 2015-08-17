@@ -36,7 +36,11 @@ func Install(c *cli.Context) {
 
 // this is why GOPATH has to bet set in main.go
 func installFromGoGet(url string) error {
-  c := exec.Command("go", "get", url)
+  gigogo := os.Getenv("GIGO_GO")
+  if gigogo == "" {
+    gigogo = "go"
+  }
+  c := exec.Command(gigogo, "get", url)
   err := c.Run()
   if err != nil {
     println(err)
